@@ -10,17 +10,22 @@ test('edit mode works', async () => {
   render(<AppWithProviders />)
   const editButtons = await screen.findAllByTestId('EditIcon')
 
-  act(async () => {
+  act(() => {
     fireEvent.click(editButtons[0])
-    const saveButtons = await screen.findAllByTestId('SaveIcon')
-    const saveButton = saveButtons[0]
-    expect(saveButton).toBeDefined()
-
-    const firstName: HTMLInputElement = screen.getByPlaceholderText('First Name')
-    expect(firstName).toBeDefined()
-    firstName.value = ''
-    fireEvent.click(saveButton)
-    const errorMessage = screen.findByText('First Name is Required')
-    expect(errorMessage).toBeDefined()
   })
+
+  const saveButtons = await screen.findAllByTestId('SaveIcon')
+  const saveButton = saveButtons[0]
+  expect(saveButton).toBeDefined()
+  
+  const firstName: HTMLInputElement = screen.getByPlaceholderText('First Name')
+  expect(firstName).toBeDefined()
+  firstName.value = ''
+
+  act(() => {
+    fireEvent.click(saveButton)
+  })
+
+  const errorMessage = screen.findByText('First Name is Required')
+  expect(errorMessage).toBeDefined()
 })

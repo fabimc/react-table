@@ -205,7 +205,7 @@ const App = () => {
 }
 
 //CREATE hook (post new user to api)
-function useCreateUser() {
+const useCreateUser = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (_user: User) => {
@@ -232,7 +232,7 @@ function useCreateUser() {
 }
 
 //READ hook (get users from api)
-function useGetUsers() {
+const useGetUsers = () => {
   return useQuery<User[]>({
     queryKey: ['users'],
     queryFn: async () => {
@@ -245,7 +245,7 @@ function useGetUsers() {
 }
 
 //UPDATE hook (put user in api)
-function useUpdateUser() {
+const useUpdateUser = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (_user: User) => {
@@ -262,7 +262,7 @@ function useUpdateUser() {
 }
 
 //DELETE hook (delete user in api)
-function useDeleteUser() {
+const useDeleteUser = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (_userId: string) => {
@@ -287,8 +287,6 @@ const AppWithProviders = () => (
   </QueryClientProvider>
 )
 
-export default AppWithProviders
-
 const validateRequired = (value: string) => !!value.length
 const validateEmail = (email: string) =>
   !!email.length &&
@@ -298,10 +296,12 @@ const validateEmail = (email: string) =>
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )
 
-function validateUser(user: User) {
+const validateUser = (user: User) => {
   return {
     firstName: !validateRequired(user.firstName) ? 'First Name is Required' : '',
     lastName: !validateRequired(user.lastName) ? 'Last Name is Required' : '',
     email: !validateEmail(user.email) ? 'Incorrect Email Format' : ''
   }
 }
+
+export default AppWithProviders
